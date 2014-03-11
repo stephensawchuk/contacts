@@ -1,0 +1,51 @@
+<!doctype html>
+<!--[if lt IE 7]>  <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>     <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>     <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>contacts.</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <!-- build:css styles/vendor.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css styles/main.css -->
+  <link rel="stylesheet" href="styles/main.css">
+  <!-- endbuild -->
+</head>
+<body ng-app="contacts">
+
+  <div class="container" ui-view></div>
+
+  <!-- build:js scripts/vendor.js -->
+  <!-- bower:js -->
+  <script src="bower_components/jquery/jquery.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+  <script src="bower_components/angularLocalStorage/src/angularLocalStorage.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <!-- endbower -->
+  <!-- endbuild -->
+
+  <!-- build:js scripts/app.js -->
+  <script src="scripts/app.js"></script>
+
+  <!-- controllers. -->
+  <script src="scripts/controllers/ContactsCtrl.js"></script>
+
+  <!-- filters. -->
+  <script src="scripts/filters/AgeFilter.js"></script>
+  <script src="scripts/filters/PhoneFilter.js"></script>
+
+  <!-- values. -->
+  <script src="scripts/values/Contacts.js"></script>
+  <script src="scripts/values/States.js"></script>
+  <script src="scripts/values/Validation.js"></script>
+  <!-- endbuild -->
+</body>
+</html>

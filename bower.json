@@ -1,0 +1,12 @@
+{
+  "name": "articulate",
+  "private": true,
+  "dependencies": {
+    "jquery": "~1.10.2",
+    "angular": "~1.2.14",
+    "angular-ui-router": "~0.2.9",
+    "angularLocalStorage": "~0.1.7",
+    "bootstrap": "~3.1.1"
+  },
+  "devDependencies": {}
+}
