@@ -1,0 +1,184 @@
+<form role="form" name="ContactForm" ng-submit="saveContact(ContactForm)">
+  <div class="well title">
+    <h1>
+      <span ng-if="action === 'create'">
+        Add a Contact
+      </span>
+      <span ng-if="action !== 'create'">
+        {{contact.name}}
+      </span>
+      <a href="" ng-if="action === 'view'" class="pull-right" ui-sref="contacts.edit({ id: contact.id })">
+        <span class="glyphicon glyphicon-pencil"></span>
+      </a>
+    </h1>
+  </div>
+
+  <div ng-if="action === 'view'" ng-class="{ 'col-xs-3': action === 'view' }">
+    <img class="img-thumbnail" ng-src="http://lorempixel.com/184/184/people/{{contact.id + 1}}/{{contact.name}}">
+  </div>
+  <div ng-class="{ 'col-xs-9': action === 'view' }">
+    <div class="row">
+      <div class="col-xs-12">
+        <!-- name. -->
+        <div class="form-group" ng-if="action !== 'view'" ng-class="{
+          'has-success has-feedback': ContactForm.name.$valid
+        }">
+          <label class="control-label" for="name">Name</label>
+          <input type="text" id="name" name="name" class="form-control" ng-model="contact.name" placeholder="Name" required>
+          <span ng-if="ContactForm.name.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- sex. -->
+      <div ng-class="{
+        'col-xs-3': action !== 'view',
+        'col-sm-3': action !== 'view',
+
+        'col-xs-4': action === 'view',
+        'col-sm-6': action === 'view'
+      }">
+        <div class="form-group" ng-class="{
+          'has-success': ContactForm.sex.$valid
+        }">
+          <label class="control-label" for="sex">Sex</label>
+          <p ng-if="action === 'view'">{{contact.sex}}</p>
+          <select ng-if="action !== 'view'" id="sex" name="sex" class="form-control" ng-model="contact.sex" required>
+            <option value="">--</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- birthday. -->
+      <div class="col-xs-6 col-sm-6">
+        <div class="form-group" ng-class="{
+          'has-error': ContactForm.birthday.$dirty && ContactForm.birthday.$invalid,
+          'has-feedback': ContactForm.birthday.$valid || ContactForm.birthday.$invalid,
+          'has-success': ContactForm.birthday.$valid
+        }">
+          <label class="control-label" for="birthday">Birthday</label>
+          <p ng-if="action === 'view'">{{contact.birthday}} ({{contact.birthday | age}})</p>
+          <input ng-if="action !== 'view'" id="birthday" name="birthday" type="text" class="form-control" ng-model="contact.birthday" placeholder="MM/DD/YYYY" required ng-pattern="validation.date">
+          <span ng-if="ContactForm.birthday.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+          <span ng-if="ContactForm.birthday.$dirty && ContactForm.birthday.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+        </div>
+      </div>
+
+      <!-- age. -->
+      <div ng-if="action !== 'view'" class="col-xs-3 col-sm-3">
+        <div>
+          <label>Age</label>
+          <div class="form-group">
+            <p ng-if="action === 'view'">{{contact.age}}</p>
+            <input ng-if="action !== 'view'" type="text" class="form-control" ng-model="contact.age" disabled>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <div ng-if="action === 'view'">
+          <label>Address</label>
+          <address>
+            {{contact.address.street}}
+            <br>{{contact.address.city}}, {{contact.address.state}} {{contact.address.postcode}}
+          </address>
+        </div>
+
+        <div ng-if="action !== 'view'">
+          <div class="form-group" ng-class="{
+            'has-success has-feedback': ContactForm.street.$valid
+          }">
+            <!-- street. -->
+            <label class="control-label" for="street">Street</label>
+            <input type="text" id="street" name="street" class="form-control" ng-model="contact.address.street" placeholder="Street" required>
+            <span ng-if="ContactForm.street.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+          </div>
+
+          <div class="row">
+            <!-- city. -->
+            <div class="col-sm-6">
+              <div class="form-group" ng-class="{
+                'has-success has-feedback': ContactForm.city.$valid
+              }">
+                <label class="control-label" for="city">City</label>
+                <input type="text" id="city" name="city" class="form-control" ng-model="contact.address.city" placeholder="City" required>
+                <span ng-if="ContactForm.city.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+              </div>
+            </div>
+
+            <!-- state. -->
+            <div class="col-sm-3">
+              <div class="form-group" ng-class="{
+                'has-success': ContactForm.state.$valid
+              }">
+                <label class="control-label" for="state">State</label>
+                <select class="form-control" id="state" name="state" ng-model="contact.address.state" ng-options="state.abbr as state.name for state in states" required>
+                  <option value="">--</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- post code. -->
+            <div class="col-sm-3">
+              <div class="form-group" ng-class="{
+                'has-error': ContactForm.postcode.$dirty && ContactForm.postcode.$invalid,
+                'has-feedback': ContactForm.postcode.$valid || ContactForm.postcode.$invalid,
+                'has-success': ContactForm.postcode.$valid
+              }">
+                <label class="control-label" for="postcode">Zip</label>
+                <input type="text" id="postcode" name="postcode" name="postcode" class="form-control" ng-model="contact.address.postcode" placeholder="Zip" required ng-pattern="validation.postcode">
+                <span ng-if="ContactForm.postcode.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                <span ng-if="ContactForm.postcode.$dirty && ContactForm.postcode.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- phone number. -->
+      <div class="col-sm-6">
+        <div class="form-group" ng-class="{
+          'has-error': ContactForm.phone.$dirty && ContactForm.phone.$invalid,
+          'has-feedback': ContactForm.phone.$valid || ContactForm.phone.$invalid,
+          'has-success': ContactForm.phone.$valid
+        }">
+          <label class="control-label" for="phone">Phone</label>
+          <p ng-if="action === 'view'">{{contact.phone | phone}}</p>
+          <input ng-if="action !== 'view'" id="phone" name="phone" type="tel" class="form-control" ng-model="contact.phone" placeholder="###-###-####" required ng-pattern="validation.phone">
+          <span ng-if="ContactForm.phone.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+          <span ng-if="ContactForm.phone.$dirty && ContactForm.phone.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+        </div>
+      </div>
+
+      <!-- email address. -->
+      <div class="col-sm-6">
+        <div class="form-group" ng-class="{
+          'has-success has-feedback': ContactForm.email.$valid
+        }">
+          <label class="control-label" for="email">Email</label>
+          <p ng-if="action === 'view'">
+            <a href="mailto:{{contact.email}}">{{contact.email}}</a>
+          </p>
+          <input ng-if="action !== 'view'" id="email" name="email" type="email" class="form-control" ng-model="contact.email" placeholder="Email Address" required>
+          <span ng-if="ContactForm.email.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="well" ng-if="submitted && ContactForm.$invalid">
+    <h3>Uh oh!</h3>
+    <p>
+      There seem to be some errors.
+    </p>
+  </div>
+
+  <button ng-if="action !== 'view'" type="submit" class="btn btn-lg btn-primary pull-right">Save Contact</button>
+</form>
